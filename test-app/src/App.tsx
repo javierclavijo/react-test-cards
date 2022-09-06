@@ -1,4 +1,5 @@
 import axios from "axios";
+import { nanoid } from "nanoid";
 import React from "react";
 import { NavLink, Route, Routes } from "react-router-dom";
 import "./App.css";
@@ -22,6 +23,7 @@ function App() {
         const newCard: CardEntity = {
           firstName: catEntity.id,
           url: catEntity.url,
+          id: nanoid(),
         };
 
         setCards([newCard]);
@@ -42,8 +44,14 @@ function App() {
       <main>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/cards" element={<CardList cards={cards} />} />
-          <Route path="/form" element={<CardForm />} />
+          <Route
+            path="/cards"
+            element={<CardList cards={cards} setCards={setCards} />}
+          />
+          <Route
+            path="/form"
+            element={<CardForm cards={cards} setCards={setCards} />}
+          />
         </Routes>
       </main>
     </React.Fragment>
