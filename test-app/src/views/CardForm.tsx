@@ -1,5 +1,9 @@
+/** @jsxImportSource @emotion/react */
+
+import { css } from "@emotion/react";
 import { nanoid } from "nanoid";
 import React from "react";
+import FormInput from "../components/FormInput";
 import { CardEntity } from "../entities/CardEntity";
 
 interface CardFormProps {
@@ -21,42 +25,40 @@ function CardForm({ cards, setCards }: CardFormProps) {
       id: nanoid(),
     };
     setCards([...cards, newCard]);
+    setUrl("");
+    setFirstName("");
+    setLastName("");
   }
+
+  const cardForm = css`
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  `;
+
+  const submitButton = css`
+    max-width: max-content;
+  `;
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="firstName">
-          First name
-          <input
-            type="text"
-            name="firstName"
-            id="firstName"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-          />
-        </label>
-        <label htmlFor="lastName">
-          Last name
-          <input
-            type="text"
-            name="lastName"
-            id="lastName"
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
-          />
-        </label>
-        <label htmlFor="url">
-          URL
-          <input
-            type="text"
-            name="url"
-            id="url"
-            value={url}
-            onChange={(e) => setUrl(e.target.value)}
-          />
-        </label>
-        <button type="submit">Submit</button>
+      <form onSubmit={handleSubmit} css={cardForm}>
+        <FormInput
+          value={firstName}
+          setValue={setFirstName}
+          labelName="First Name"
+          id={"firstName"}
+        />
+        <FormInput
+          value={lastName}
+          setValue={setLastName}
+          labelName="Last Name"
+          id={"lastName"}
+        />
+        <FormInput value={url} setValue={setUrl} labelName="URL" id={"url"} />
+        <button type="submit" css={submitButton}>
+          Submit
+        </button>
       </form>
     </div>
   );

@@ -10,7 +10,6 @@ interface CardProps {
 
 function Card({ entity, deleteCard }: CardProps) {
   const card = css`
-    max-width: 20%;
     display: flex;
     flex-direction: column;
     align-items: center;
