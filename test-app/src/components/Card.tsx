@@ -9,33 +9,6 @@ interface CardProps {
 }
 
 function Card({ entity, deleteCard }: CardProps) {
-  const card = css`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 2rem;
-    border: 2px solid grey;
-    border-radius: 10px;
-    position: relative;
-  `;
-
-  const imgContainer = css`
-    max-height: 8rem;
-    max-width: 100%;
-  `;
-
-  const img = css`
-    height: 100%;
-    width: 100%;
-    object-fit: contain;
-  `;
-
-  const deleteButton = css`
-    position: absolute;
-    right: 0;
-    top: 0;
-  `;
-
   return (
     <article css={card}>
       <button
@@ -54,5 +27,32 @@ function Card({ entity, deleteCard }: CardProps) {
     </article>
   );
 }
+
+const card = css`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  border: 2px solid grey;
+  border-radius: 10px;
+  position: relative;
+`;
+
+const imgContainer = css`
+  max-height: 8rem;
+  max-width: 100%;
+`;
+
+const img = css`
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+`;
+
+const deleteButton = css`
+  position: absolute;
+  right: 0;
+  top: 0;
+`;
 
 export default Card;

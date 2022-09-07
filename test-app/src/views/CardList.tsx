@@ -11,13 +11,6 @@ interface CardListProps {
 }
 
 function CardList({ cards, setCards }: CardListProps) {
-  const listDiv = css`
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-auto-rows: auto;
-    gap: 2rem;
-    padding: 2rem;
-  `;
 
   function deleteCard(card: CardEntity) {
     setCards(cards.filter((item) => item.id !== card.id));
@@ -31,5 +24,13 @@ function CardList({ cards, setCards }: CardListProps) {
     </div>
   );
 }
+
+const listDiv = css`
+display: grid;
+grid-template-columns: repeat(4, 1fr);
+grid-auto-rows: auto;
+gap: 2rem;
+padding: 2rem;
+`;
 
 export default CardList;

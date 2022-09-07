@@ -30,16 +30,6 @@ function CardForm({ cards, setCards }: CardFormProps) {
     setLastName("");
   }
 
-  const cardForm = css`
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  `;
-
-  const submitButton = css`
-    max-width: max-content;
-  `;
-
   return (
     <div>
       <form onSubmit={handleSubmit} css={cardForm}>
@@ -63,5 +53,15 @@ function CardForm({ cards, setCards }: CardFormProps) {
     </div>
   );
 }
+
+const cardForm = css`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+`;
+
+const submitButton = css`
+  max-width: max-content;
+`;
 
 export default CardForm;
