@@ -1,25 +1,52 @@
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
 import React from "react";
+import { FieldValues, UseFormRegister, Validate } from "react-hook-form";
+import { Colors } from "../styles/ts/constants";
+import { CardFormData } from "../views/CardForm";
 
 interface FormInputProps {
-  value: string;
-  setValue: React.Dispatch<React.SetStateAction<string>>;
   labelName: string;
-  id: string;
+  id: "firstName" | "lastName" | "url";
+  required?: string;
+  register: UseFormRegister<CardFormData>;
+  validate?: Validate<string> | Record<string, Validate<string>> | undefined;
 }
 
-function FormInput({ value, setValue, labelName, id }: FormInputProps) {
+function FormInput({
+  labelName,
+  id,
+  required,
+  register,
+  validate,
+}: FormInputProps) {
   return (
-    <label htmlFor={id}>
+    <label htmlFor={id} css={label}>
       {labelName}
       <input
         type="text"
-        name={id}
-        id={id}
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
+        css={input}
+        {...register(id, { required, validate })}
       />
     </label>
   );
 }
+
+const label = css`
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.875rem;
+`;
+
+const input = css`
+  border: none;
+  border-bottom: 1px solid ${Colors.PRIMARY};
+  background-color: ${Colors.WHITE};
+
+  &:focus {
+    outline: none;
+  }
+`;
 
 export default FormInput;

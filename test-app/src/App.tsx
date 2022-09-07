@@ -1,10 +1,13 @@
+/** @jsxImportSource @emotion/react */
+import { css, Global } from "@emotion/react";
 import axios from "axios";
 import { nanoid } from "nanoid";
 import React from "react";
-import { NavLink, Route, Routes } from "react-router-dom";
-import "./App.css";
+import { Route, Routes } from "react-router-dom";
+import Header from "./components/Header";
 import { CardEntity } from "./entities/CardEntity";
 import { CatEntity } from "./entities/CatEntity";
+import { Colors } from "./styles/ts/constants";
 import CardForm from "./views/CardForm";
 import CardList from "./views/CardList";
 import Home from "./views/Home";
@@ -35,13 +38,9 @@ function App() {
 
   return (
     <React.Fragment>
-      <header>
-        <nav>
-          <NavLink to="/form">Add a card</NavLink>
-          <NavLink to="/cards">See all cards</NavLink>
-        </nav>
-      </header>
-      <main>
+      <Global styles={globalStyles} />
+      <Header />
+      <main css={main}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route
@@ -57,5 +56,19 @@ function App() {
     </React.Fragment>
   );
 }
+
+const main = css`
+  padding: 1.5rem 3rem;
+`;
+
+const globalStyles = css`
+  html {
+    background-color: ${Colors.WHITE};
+  }
+
+  * {
+    color: ${Colors.BLACK};
+  }
+`;
 
 export default App;

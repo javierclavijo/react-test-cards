@@ -2,6 +2,8 @@
 
 import { css } from "@emotion/react";
 import { CardEntity } from "../entities/CardEntity";
+import { Colors } from "../styles/ts/constants";
+import Preview from "./Preview";
 
 interface CardProps {
   entity: CardEntity;
@@ -16,14 +18,11 @@ function Card({ entity, deleteCard }: CardProps) {
         css={deleteButton}
         onClick={() => deleteCard(entity)}
       >
-        X
+        ×
       </button>
-      <div css={imgContainer}>
-        <img src={entity.url} css={img} />
-      </div>
+      <Preview url={entity.url} />
       <p>{entity.firstName}</p>
       <p>{entity.lastName}</p>
-      <a href={entity.url}>{entity.url}</a>
     </article>
   );
 }
@@ -33,26 +32,22 @@ const card = css`
   flex-direction: column;
   align-items: center;
   padding: 2rem;
-  border: 2px solid grey;
-  border-radius: 10px;
+  background-color: ${Colors.SECONDARY};
+  border-radius: 5px;
   position: relative;
-`;
-
-const imgContainer = css`
-  max-height: 8rem;
-  max-width: 100%;
-`;
-
-const img = css`
-  height: 100%;
-  width: 100%;
-  object-fit: contain;
+  gap: 1rem;
 `;
 
 const deleteButton = css`
   position: absolute;
   right: 0;
   top: 0;
+  border: none;
+  background-color: ${Colors.CONTRAST};
+  border-radius: 0 5px;
+  width: auto;
+  color: ${Colors.WHITE};
+  cursor: pointer;
 `;
 
 export default Card;
