@@ -10,6 +10,7 @@ import FormInput from "../components/FormInput";
 import { CardEntity } from "../entities/CardEntity";
 import { h2 } from "../styles/ts/common";
 import { Colors } from "../styles/ts/constants";
+import { useNavigate } from "react-router-dom";
 
 interface CardFormProps {
   cards: CardEntity[];
@@ -23,16 +24,17 @@ export interface CardFormData {
 }
 
 function CardForm({ cards, setCards }: CardFormProps) {
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
+    watch,
+    reset,
   } = useForm<CardFormData>();
 
-  const [url, setUrl] = React.useState<string>("");
-  const [firstName, setFirstName] = React.useState<string>("");
-  const [lastName, setLastName] = React.useState<string>("");
+  const url: string = watch("url");
 
   function onSubmit(data: CardFormData) {
     const newCard = {
@@ -42,9 +44,8 @@ function CardForm({ cards, setCards }: CardFormProps) {
       id: nanoid(),
     };
     setCards([...cards, newCard]);
-    setUrl("");
-    setFirstName("");
-    setLastName("");
+    reset();
+    navigate("/cards");
   }
 
   const validateUrl = (value: string) => {
@@ -59,55 +60,73 @@ function CardForm({ cards, setCards }: CardFormProps) {
   return (
     <React.Fragment>
       <h2 css={h2}>Add a card</h2>
-      <Preview url={url} />
-      <form onSubmit={handleSubmit(onSubmit)} css={cardForm}>
-        <FormInput
-          register={register}
-          labelName="First Name"
-          id="firstName"
-          required="First name is required."
-        />
-        <ErrorMessage
-          errors={errors}
-          name="firstName"
-          render={({ message }) => <p css={errorStyle}>{message}</p>}
-        />
-        <FormInput
-          register={register}
-          labelName="Last Name"
-          id="lastName"
-          required="Last name is required."
-        />
-        <ErrorMessage
-          errors={errors}
-          name="lastName"
-          render={({ message }) => <p css={errorStyle}>{message}</p>}
-        />
-        <FormInput
-          register={register}
-          labelName="Image URL"
-          id="url"
-          required="Image URL is required."
-          validate={validateUrl}
-        />
-        <ErrorMessage
-          errors={errors}
-          name="url"
-          render={({ message }) => <p css={errorStyle}>{message}</p>}
-        />
-        <button type="submit" css={submitButton}>
-          Submit
-        </button>
-      </form>
+      <div css={formContainer}>
+        <div css={previewContainer}>
+          <Preview url={url} showMessage />
+        </div>
+        <form onSubmit={handleSubmit(onSubmit)} css={cardForm}>
+          <FormInput
+            register={register}
+            labelName="First Name"
+            id="firstName"
+            required="First name is required."
+          />
+          <ErrorMessage
+            errors={errors}
+            name="firstName"
+            render={({ message }) => <p css={errorStyle}>{message}</p>}
+          />
+          <FormInput
+            register={register}
+            labelName="Last Name"
+            id="lastName"
+            required="Last name is required."
+          />
+          <ErrorMessage
+            errors={errors}
+            name="lastName"
+            render={({ message }) => <p css={errorStyle}>{message}</p>}
+          />
+          <FormInput
+            register={register}
+            labelName="Image URL"
+            id="url"
+            required="Image URL is required."
+            validate={validateUrl}
+          />
+          <ErrorMessage
+            errors={errors}
+            name="url"
+            render={({ message }) => <p css={errorStyle}>{message}</p>}
+          />
+          <button type="submit" css={submitButton}>
+            Submit
+          </button>
+        </form>
+      </div>
     </React.Fragment>
   );
 }
+
+const formContainer = css`
+  max-width: 20rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.5rem 0;
+`;
+
+const previewContainer = css`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
 
 const cardForm = css`
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  max-width: 16rem;
 `;
 
 const submitButton = css`
@@ -119,7 +138,7 @@ const submitButton = css`
   color: ${Colors.WHITE};
 `;
 
-export const errorStyle = css`
+const errorStyle = css`
   color: red;
   margin: 0;
   width: 100%;

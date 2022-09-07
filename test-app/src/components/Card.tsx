@@ -31,6 +31,7 @@ const card = css`
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
   padding: 2rem;
   background-color: ${Colors.SECONDARY};
   border-radius: 5px;
